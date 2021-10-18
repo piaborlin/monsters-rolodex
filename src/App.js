@@ -20,25 +20,18 @@ class App extends Component {
   }
 
   render() {
+    const { monsters, searchField } = this.state;
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField.toLowerCase())
+    );
     return (
       <div className='App'>
         <input
           type='search'
           placeholder='search monsters'
-          onChange={(e) => {
-            this.setState({ searchField: e.target.value }, () =>
-              console.log(
-                'setState sync call, state is updated immediately',
-                this.state
-              )
-            );
-            console.log(
-              'setState async call, state is not yet updated',
-              this.state
-            );
-          }}
+          onChange={(e) => this.setState({ searchField: e.target.value })}
         />
-        <CardList monsters={this.state.monsters} />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
